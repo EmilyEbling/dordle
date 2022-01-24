@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js')
 const { channelId } = require('../config.json');
 
 function scheduleReminder(client) {
-	fs.readFile('data\\time-settings.json', (err, data) => {
+	fs.readFile('data/time-settings.json', (err, data) => {
 		if (err) {
 			console.log("Error reading file from disk:", err);
 			return;
@@ -17,7 +17,7 @@ function scheduleReminder(client) {
 }
 
 function remind(client, scheduledEvent = false) {
-	fs.readFile('data\\time-settings.json', (err, data) => {
+	fs.readFile('data/time-settings.json', (err, data) => {
 		if (err) {
 			console.log("Error reading file from disk:", err);
 			return;
@@ -44,7 +44,7 @@ function remind(client, scheduledEvent = false) {
 			if (scheduledEvent) {
 				const offsetTime = 86400000; // One day in milliseconds
 				settings.messageSchedule += offsetTime;
-				fs.writeFile('data\\time-settings.json', JSON.stringify(settings, null, '\t'), succeeded => {
+				fs.writeFile('data/time-settings.json', JSON.stringify(settings, null, '\t'), succeeded => {
 					if (succeeded) {
 						scheduleReminder(client);
 					}
@@ -70,7 +70,7 @@ function updateSavedMessageLeaderboard(leaderboard) {
 }
 
 function sendLeaderboardMessage(channel, messageContent) {
-	fs.readFile('data\\leaderboard.json', (err, data) => {
+	fs.readFile('data/leaderboard.json', (err, data) => {
 		if (err) {
 			console.log("Error reading file from disk:", err);
 			return;

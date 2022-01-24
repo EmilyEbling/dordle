@@ -12,7 +12,7 @@ function parseMessage(message) {
 exports.parseMessage = parseMessage;
 
 function updateLeaderboard(message, wordleMessage) {
-    fs.readFile('data\\leaderboard.json', (err, data) => {
+    fs.readFile('data/leaderboard.json', (err, data) => {
         if (err) {
 			console.log("Error reading file from disk:", err);
 			return;
@@ -33,7 +33,7 @@ function updateLeaderboard(message, wordleMessage) {
         pastScores.push(score);
         leaderboard[message.author.id] = pastScores;
 
-        fs.writeFile('data\\leaderboard.json', JSON.stringify(leaderboard, null, '\t'), succeeded => {
+        fs.writeFile('data/leaderboard.json', JSON.stringify(leaderboard, null, '\t'), succeeded => {
             if (succeeded) {
                 console.log("Leaderboard updated!");
                 message.react('✅');
