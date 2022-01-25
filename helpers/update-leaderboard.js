@@ -1,4 +1,5 @@
 const fs = require('fs');
+const reminder = require('./reminder.js')
 
 function parseMessage(message) {
     const wordleRegex = /Wordle \d{3} ([\dX])\/6\n{0,2}[⬛🟩🟨⬜]{5}/;
@@ -8,8 +9,6 @@ function parseMessage(message) {
         updateLeaderboard(message, wordleMessage);
     }
 }
-
-exports.parseMessage = parseMessage;
 
 function updateLeaderboard(message, wordleMessage) {
     fs.readFile('data/leaderboard.json', (err, data) => {
@@ -22,7 +21,8 @@ function updateLeaderboard(message, wordleMessage) {
         let score;
         if (wordleMessage[1] == 'X') {
             score = 0;
-        } else {
+        } 
+        else {
             score = 7 - parseInt(wordleMessage[1]);
         }
         
@@ -35,11 +35,11 @@ function updateLeaderboard(message, wordleMessage) {
 
         fs.writeFile('data/leaderboard.json', JSON.stringify(leaderboard, null, '\t'), succeeded => {
             if (succeeded) {
-                console.log("Leaderboard updated!");
                 message.react('✅');
-
                 reminder.updateSavedMessageLeaderboard(leaderboard);
             }
         });
     });
 }
+
+exports.parseMessage = parseMessage;

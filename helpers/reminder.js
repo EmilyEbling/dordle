@@ -97,11 +97,6 @@ function sendLeaderboardMessage(channel, messageContent) {
 	});
 }
 
-exports.scheduleReminder = scheduleReminder;
-exports.remind = remind;
-exports.updateSavedMessageLeaderboard = updateSavedMessageLeaderboard;
-exports.sendLeaderboardMessage = sendLeaderboardMessage;
-
 function getSortedLeaderboard(leaderboard_json) {
     var values = [];
     Object.entries(leaderboard_json).forEach(function([key, scores]) {
@@ -120,26 +115,22 @@ function getSortedLeaderboard(leaderboard_json) {
 
 function getMessageFields(leaderboard) {
     var nameList = '';
-    var averageList = '';
     var totalList = '';
-    var numberOfItems = 0;
-    var sumOfAll = 0;
+	var averageList = '';
     for (const entry of getSortedLeaderboard(leaderboard)) {
         nameList += `${entry.user}\n`;
-        averageList += `${entry.average}\n`;
         totalList += `${entry.total}\n`;
-
-        numberOfItems += entry.total / entry.average;
-        sumOfAll += entry.total;
+		averageList += `${entry.average}\n`
     }
 
     return [
         { name: 'User', value: nameList, inline: true },
-        { name: 'Average', value: averageList, inline: true },
         { name: 'Total', value: totalList, inline: true },
-
-        { name: 'Attempts', value: `${numberOfItems}`, inline: true },
-        { name: 'Overall Average', value: `${sumOfAll / numberOfItems}`, inline: true },
-        { name: 'Sum', value: `${sumOfAll}`, inline: true },
+		{ name: 'Average', value: averageList, inline: true }
     ];
 }
+
+exports.scheduleReminder = scheduleReminder;
+exports.remind = remind;
+exports.updateSavedMessageLeaderboard = updateSavedMessageLeaderboard;
+exports.sendLeaderboardMessage = sendLeaderboardMessage;
